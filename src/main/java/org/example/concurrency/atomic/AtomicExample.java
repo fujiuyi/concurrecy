@@ -9,6 +9,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * AtomicExample
+ */
 @Slf4j
 @NotThreadSafe
 public class AtomicExample {
@@ -19,6 +22,11 @@ public class AtomicExample {
 
     private static AtomicInteger count = new AtomicInteger(0);
 
+    /**
+     *  main
+     * @param args args
+     * @throws InterruptedException InterruptedException
+     */
     public static void main(String[] args) throws InterruptedException {
 
         Semaphore semaphore = new Semaphore(threadNum);

@@ -16,6 +16,7 @@ public class CountExample {
 
     private static int threadNum = 200;
 
+    //就算是volatile的话也不能满足线程间一致
     private static int count = 0;
 
     public static void main(String[] args) throws InterruptedException {
