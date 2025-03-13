@@ -20,16 +20,9 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/q")
-    public String getString(){
-        return "@GetMapping\n" +
-                "    public List<Student> getStudentList(){\n" +
-                "        return studentService.getAllStudents();\n" +
-                "    }";
-    }
 
-    @GetMapping("/w")
-    public List<Student> getStudentList(){
+    @GetMapping
+    public List<Student> getStudentList() {
         return studentService.getAllStudents();
     }
 }
