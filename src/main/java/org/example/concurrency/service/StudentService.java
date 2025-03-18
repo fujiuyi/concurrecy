@@ -22,6 +22,11 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+    // 查询指定学生
+    public Student findById(Integer id) {
+        return studentRepository.findById(id).orElse(null);
+    }
+
     // 根据姓名查询学生
     public List<Student> getStudentsByName(String name) {
         return studentRepository.findByName(name);
@@ -30,5 +35,9 @@ public class StudentService {
     // 根据年龄查询学生
     public List<Student> getStudentsByAge(Integer age) {
         return studentRepository.findByAge(age);
+    }
+
+    public Student saveStudents(Student student) {
+        return studentRepository.save(student);
     }
 }

@@ -23,4 +23,11 @@ public class EnumSingleton {
             return singleton;
         }
     }
+
+    public static void main(String[] args) {
+        int cpuCores = Runtime.getRuntime().availableProcessors();
+
+        System.out.println(cpuCores);
+        System.out.println(Runtime.getRuntime().maxMemory()/1024/1024);
+    }
 }
