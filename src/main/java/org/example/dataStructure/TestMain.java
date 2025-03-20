@@ -9,49 +9,43 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-//        ArrayExample<Integer> arrayExample = new ArrayExample<>(10);
-//
-//        for (int i = 0; i < 10; i++) {
-//            arrayExample.add(i, i);
-//        }
-//        System.out.println(arrayExample);
-//
-//        arrayExample.addFirst(18);
-//        System.out.println(arrayExample);
-//
-//        arrayExample.addLast(12);
-//        System.out.println(arrayExample);
-//
-//        arrayExample.removeFirst();
-//        arrayExample.removeLast();
-//        System.out.println(arrayExample);
-//
-//        arrayExample.remove(5);
-//        arrayExample.remove(5);
-//        System.out.println(arrayExample);
+        LinkedQueue<Integer> arrayExample = new LinkedQueue<>();
+
+        for (int i = 0; i < 10; i++) {
+            arrayExample.enQueue(i);
+        }
+        System.out.println(arrayExample);
+
+        arrayExample.deQueue();
+        arrayExample.deQueue();
+        System.out.println(arrayExample);
+
+        arrayExample.deQueue();
+        arrayExample.deQueue();
+        System.out.println(arrayExample);
 
 //        TestMain testMain = new TestMain();
 //        testMain.calculate(new ArrayQueue<>(), 100000);
-//        testMain.calculate(new LoopQueue<>(), 10000000);
-//        testMain.calculate(new ArrayDeque<>(), 10000000);
+//        testMain.calculate(new LoopQueue<>(), 100000);
+//        testMain.calculate(new LinkedQueue<>(), 100000);
 
-        LinkedListExample<Integer> linkedListExample = new LinkedListExample<>();
-        linkedListExample.addFirst(1);
-        System.out.println(linkedListExample);
-        linkedListExample.addFirst(2);
-        System.out.println(linkedListExample);
-        linkedListExample.addFirst(3);
-        System.out.println(linkedListExample);
-        linkedListExample.addFirst(4);
-        System.out.println(linkedListExample);
-        linkedListExample.addFirst(5);
-        System.out.println(linkedListExample);
-        linkedListExample.add(2, 666);
-        System.out.println(linkedListExample);
-        linkedListExample.remove(2);
-        System.out.println(linkedListExample);
-        linkedListExample.removeFirst();
-        System.out.println(linkedListExample);
+//        LinkedListExample<Integer> linkedListExample = new LinkedListExample<>();
+//        linkedListExample.addFirst(1);
+//        System.out.println(linkedListExample);
+//        linkedListExample.addFirst(2);
+//        System.out.println(linkedListExample);
+//        linkedListExample.addFirst(3);
+//        System.out.println(linkedListExample);
+//        linkedListExample.addFirst(4);
+//        System.out.println(linkedListExample);
+//        linkedListExample.addFirst(5);
+//        System.out.println(linkedListExample);
+//        linkedListExample.add(2, 666);
+//        System.out.println(linkedListExample);
+//        linkedListExample.remove(2);
+//        System.out.println(linkedListExample);
+//        linkedListExample.removeFirst();
+//        System.out.println(linkedListExample);
 
     }
 
@@ -87,15 +81,15 @@ public class TestMain {
         System.out.println((stop - start) / 1000000000.0);
     }
 
-    public void calculate(ArrayDeque<Integer> arrayDeque, int count) {
+    public void calculate(LinkedQueue<Integer> linkedQueue, int count) {
 
         double start = System.nanoTime();
 
         for (int i = 0; i < count; i++) {
-            arrayDeque.push(new Random().nextInt(Integer.MAX_VALUE));
+            linkedQueue.enQueue(new Random().nextInt(Integer.MAX_VALUE));
         }
         for (int i = 0; i < count; i++) {
-            arrayDeque.pop();
+            linkedQueue.deQueue();
         }
 
         double stop = System.nanoTime();
