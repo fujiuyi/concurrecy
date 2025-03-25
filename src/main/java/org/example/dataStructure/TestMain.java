@@ -6,19 +6,12 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-        PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.reverseOrder());
+        Integer[] arr = new Integer[]{1, 2, 3};
+        SegmentTree<Integer> segmentTree = new SegmentTree<>(arr, Integer::sum);
+        System.out.println(segmentTree);
 
-        for (int i = 0; i < 1000; i++) {
-            if (queue.size() < 10) {
-                queue.offer(i);
-            } else {
-                if (queue.peek() > i) {
-                    queue.poll();
-                    queue.offer(i);
-                }
-            }
-        }
-        System.out.println(queue);
+        segmentTree.set(0, 5);
+        System.out.println(segmentTree);
 
     }
 

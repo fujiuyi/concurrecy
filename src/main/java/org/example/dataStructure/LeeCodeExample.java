@@ -289,3 +289,20 @@ public class LeeCodeExample {
 
     }
 }
+
+class NumArray {
+
+    private SegmentTree<Integer> segmentTree;
+
+    public NumArray(int[] nums) {
+        segmentTree = new SegmentTree<>(Arrays.stream(nums).boxed().toArray(Integer[]::new), Integer::sum);
+    }
+
+    public void update(int index, int val) {
+        segmentTree.set(index, val);
+    }
+
+    public int sumRange(int left, int right) {
+        return segmentTree.query(left, right);
+    }
+}
