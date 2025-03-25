@@ -1,51 +1,24 @@
 package org.example.dataStructure;
 
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 public class TestMain {
 
     public static void main(String[] args) {
 
-        LinkedQueue<Integer> arrayExample = new LinkedQueue<>();
+        PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.reverseOrder());
 
-        for (int i = 0; i < 10; i++) {
-            arrayExample.enQueue(i);
+        for (int i = 0; i < 1000; i++) {
+            if (queue.size() < 10) {
+                queue.offer(i);
+            } else {
+                if (queue.peek() > i) {
+                    queue.poll();
+                    queue.offer(i);
+                }
+            }
         }
-        System.out.println(arrayExample);
-
-        arrayExample.deQueue();
-        arrayExample.deQueue();
-        System.out.println(arrayExample);
-
-        arrayExample.deQueue();
-        arrayExample.deQueue();
-        System.out.println(arrayExample);
-
-//        TestMain testMain = new TestMain();
-//        testMain.calculate(new ArrayQueue<>(), 100000);
-//        testMain.calculate(new LoopQueue<>(), 100000);
-//        testMain.calculate(new LinkedQueue<>(), 100000);
-
-//        LinkedListExample<Integer> linkedListExample = new LinkedListExample<>();
-//        linkedListExample.addFirst(1);
-//        System.out.println(linkedListExample);
-//        linkedListExample.addFirst(2);
-//        System.out.println(linkedListExample);
-//        linkedListExample.addFirst(3);
-//        System.out.println(linkedListExample);
-//        linkedListExample.addFirst(4);
-//        System.out.println(linkedListExample);
-//        linkedListExample.addFirst(5);
-//        System.out.println(linkedListExample);
-//        linkedListExample.add(2, 666);
-//        System.out.println(linkedListExample);
-//        linkedListExample.remove(2);
-//        System.out.println(linkedListExample);
-//        linkedListExample.removeFirst();
-//        System.out.println(linkedListExample);
+        System.out.println(queue);
 
     }
 
