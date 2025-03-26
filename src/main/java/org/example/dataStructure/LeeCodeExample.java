@@ -306,3 +306,125 @@ class NumArray {
         return segmentTree.query(left, right);
     }
 }
+
+class WordDictionary {
+    private class Node {
+        public boolean isEnd;
+        public Map<Character, Node> next;
+
+        public Node(boolean isEnd) {
+            this.isEnd = isEnd;
+            next = new HashMap<>();
+        }
+
+        public Node() {
+            this(false);
+        }
+    }
+
+    private Node node;
+
+    public WordDictionary() {
+        node = new Node();
+    }
+
+    public void addWord(String word) {
+        Node cur = this.node;
+        for (int i = 0; i < word.length(); i++) {
+            Character c = word.charAt(i);
+            if (!cur.next.containsKey(c)) {
+                cur.next.put(c, new Node());
+            }
+            cur = cur.next.get(c);
+        }
+        cur.isEnd = true;
+    }
+
+    public boolean search(String word) {
+        return search(this.node, word, 0);
+    }
+
+    private boolean search(Node node, String word, int index) {
+
+        if (index == word.length()) {
+            return node.isEnd;
+        }
+
+        Character c = word.charAt(index);
+        if (c.equals('.')) {
+            for (Node node1 : node.next.values()) {
+                if (search(node1, word, index + 1)) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            if (node.next.containsKey(c)) {
+                return search(node.next.get(c), word, index + 1);
+            } else {
+                return false;
+            }
+        }
+    }
+}
+
+class MapSum {
+    private class Node {
+
+        public boolean isEnd;
+        public int value = 0;
+        public Map<Character, Node> next;
+
+        public Node(boolean isEnd) {
+            this.isEnd = isEnd;
+            next = new HashMap<>();
+        }
+
+        public Node() {
+            this(false);
+        }
+    }
+
+    private Node node;
+
+    public MapSum() {
+        node = new Node();
+    }
+
+    public void insert(String key, int val) {
+
+        Node cur = this.node;
+        for (int i = 0; i < key.length(); i++) {
+            Character c = key.charAt(i);
+            if (!cur.next.containsKey(c)) {
+                cur.next.put(c, new Node());
+            }
+            cur = cur.next.get(c);
+        }
+        cur.isEnd = true;
+        cur.value = val;
+    }
+
+    public int sum(String prefix) {
+
+        Node cur = this.node;
+        for (int i = 0; i < prefix.length(); i++) {
+            Character c = prefix.charAt(i);
+            if (!cur.next.containsKey(c)) {
+                return 0;
+            }
+            cur = cur.next.get(c);
+        }
+
+        return sum(cur);
+    }
+
+    private int sum(Node node) {
+        int res = node.value;
+        for (Node node1 : node.next.values()) {
+            res += sum(node1);
+        }
+        return res;
+    }
+
+}
