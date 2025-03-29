@@ -1,6 +1,7 @@
 package org.example.dataStructure;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 class ListNode {
     int val;
@@ -279,12 +280,126 @@ public class LeeCodeExample {
         return queue.poll();
     }
 
-    public static void main(String[] args) {
-        TreeNode node = new TreeNode(236);
-        node.left = new TreeNode(104);
-        node.right = new TreeNode(701);
 
-        System.out.println(Arrays.toString(new LeeCodeExample().topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2)));
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            List<Integer> levelList = new ArrayList<>();
+            int curSize = queue.size();
+            for (int i = 0; i < curSize; i++) {
+                TreeNode cur = queue.poll();
+
+                levelList.add(cur.val);
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+            result.add(levelList);
+        }
+        return result;
+    }
+
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (null == root) {
+            return result;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.poll();
+                if (i == size - 1) {
+                    result.add(cur.val);
+                }
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> result = new ArrayList<>();
+        if (null == root) {
+            return result;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            long sum = 0L;
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.poll();
+                sum += cur.val;
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+            result.add((double) (sum / size));
+        }
+        return result;
+    }
+
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        //从右到左
+        boolean flag = true;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            List<Integer> level = new ArrayList<>();
+            int levelSize = queue.size();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode cur = queue.poll();
+                level.add(cur.val);
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+            if (!flag) {
+                Collections.reverse(level);
+            }
+            result.add(level);
+            flag = !flag;
+        }
+        return result;
+    }
+
+
+    public static void main(String[] args) {
+        TreeNode node = new TreeNode(3);
+        node.left = new TreeNode(9);
+        node.right = new TreeNode(20);
+        node.right.left = new TreeNode(15);
+        node.right.right = new TreeNode(7);
+
+        List<List<Integer>> result = new LeeCodeExample().levelOrder(node);
+        System.out.println(result);
 
     }
 }
