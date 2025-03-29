@@ -6,13 +6,26 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-        Integer[] arr = new Integer[]{1, 2, 3};
-        SegmentTree<Integer> segmentTree = new SegmentTree<>(arr, Integer::sum);
-        System.out.println(segmentTree);
+        int size = 100000;
+        UnionFind unionFind = new UnionFind(size);
 
-        segmentTree.set(0, 5);
-        System.out.println(segmentTree);
+        long strat = System.nanoTime();
+        for (int i = 0; i < size; i++) {
+            Random random = new Random();
+            int p = random.nextInt(size);
+            int q = random.nextInt(size);
+            unionFind.unionElements(p, q);
+        }
 
+        for (int i = 0; i < size; i++) {
+            Random random = new Random();
+            int p = random.nextInt(size);
+            int q = random.nextInt(size);
+            unionFind.isConnected(p, q);
+        }
+        long end = System.nanoTime();
+
+        System.out.println((end - strat) / 1000000000.0);
     }
 
     public void calculate(ArrayQueue<Integer> arrayQueue, int count) {

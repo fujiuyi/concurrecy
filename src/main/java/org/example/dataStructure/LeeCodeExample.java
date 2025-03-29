@@ -1,7 +1,6 @@
 package org.example.dataStructure;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 class ListNode {
     int val;
@@ -427,4 +426,148 @@ class MapSum {
         return res;
     }
 
+
+}
+
+class Solution {
+
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+
+        UnionFind unionFind = new UnionFind(n);
+
+        for (int i = 0; i < edges.length; i++) {
+            unionFind.unionElements(edges[i][0], edges[i][1]);
+        }
+
+        return unionFind.isConnect(source, destination);
+    }
+
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        UnionFind unionFind = new UnionFind(n);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (isConnected[i][j] == 1) {
+                    unionFind.unionElements(i, j);
+                }
+            }
+        }
+        return unionFind.count;
+    }
+
+    public int minScore(int n, int[][] roads) {
+        //因为roads中的编号是从1开始的，相当于浪费一个0
+        UnionFind unionFind = new UnionFind(n + 1);
+
+        for (int i = 0; i < roads.length; i++) {
+            unionFind.unionElements(roads[i][0], roads[i][1]);
+        }
+
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < roads.length; i++) {
+            int j = roads[i][0];
+            int k = roads[i][1];
+            int distance = roads[i][2];
+            if (unionFind.isConnect(n, j) || unionFind.isConnect(n, k)) {
+                if (distance < min) {
+                    min = distance;
+                }
+            }
+        }
+        return min;
+
+    }
+
+    public boolean equationsPossible(String[] equations) {
+
+        UnionFind unionFind = new UnionFind(26);
+
+        for (int i = 0; i < equations.length; i++) {
+            int p = equations[i].charAt(1) - 'a';
+            int q = equations[i].charAt(4) - 'a';
+
+            boolean x = equations[i].charAt(2) == '=';
+            if (x) {
+                unionFind.unionElements(p, q);
+            }
+        }
+
+        for (int i = 0; i < equations.length; i++) {
+            int p = equations[i].charAt(1) - 'a';
+            int q = equations[i].charAt(4) - 'a';
+
+            boolean x = equations[i].charAt(2) == '=';
+            if (!x && unionFind.isConnect(p, q)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public String smallestEquivalentString(String s1, String s2, String baseStr) {
+        UnionFind unionFind = new UnionFind(26);
+
+        for (int i = 0; i < s1.length(); i++) {
+            int p = s1.charAt(i) - 'a';
+            int q = s1.charAt(i) - 'a';
+            unionFind.unionElements(p, q);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < baseStr.length(); i++) {
+            sb.append(unionFind.find(baseStr.charAt(i)));
+        }
+        return sb.toString();
+    }
+
+    private class UnionFind {
+
+        private int[] parent;
+        private int[] rank;
+        private int count;//联通分量
+
+        public UnionFind(int size) {
+            this.parent = new int[size];
+            this.rank = new int[size];
+            this.count = size;
+
+            for (int i = 0; i < size; i++) {
+                this.parent[i] = i;
+                this.rank[i] = 1;
+            }
+        }
+
+        private int find(int index) {
+            while (index != parent[index]) {
+                parent[index] = parent[parent[index]];
+                index = parent[index];
+            }
+            return index;
+        }
+
+        public boolean isConnect(int p, int q) {
+            return find(p) == find(q);
+        }
+
+        public void unionElements(int p, int q) {
+            int pRoot = find(p);
+            int qRoot = find(q);
+
+            if (pRoot == qRoot) {
+                return;
+            }
+
+            if (rank[pRoot] < rank[qRoot]) {
+                parent[pRoot] = parent[qRoot];
+            } else if (rank[pRoot] > rank[qRoot]) {
+                parent[qRoot] = parent[pRoot];
+            } else {
+                parent[qRoot] = parent[pRoot];
+                rank[pRoot] += 1;
+            }
+            count--;
+        }
+    }
 }
